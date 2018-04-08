@@ -1,0 +1,28 @@
+.button{
+    -fx-background-color: #48C0D3;
+    -fx-text-fill: #E7F5F2;
+    -fx-font-size: 14;
+    -fx-padding: 2px;
+    -fx-border-radius: 0px;
+
+}
+
+.button2{
+    -fx-background-color:  #FC4442;
+    -fx-text-fill: #E7F5F2;
+    -fx-font-size: 14;
+    -fx-padding: 2px;
+    -fx-border-radius: 0px;
+}
+
+
+.button3
+{
+    -fx-background-color: #4EF037;
+    -fx-text-fill: #E7F5F2;
+    -fx-font-size: 14;
+    -fx-padding: 2px;
+    -fx-border-radius: 0px;
+
+}
+

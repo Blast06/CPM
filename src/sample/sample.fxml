@@ -22,12 +22,12 @@
             <Text layoutX="249.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DURACION" />
             <Text layoutX="344.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COSTO" />
             <TextField fx:id="campo_actividad" layoutX="69.0" layoutY="47.0" prefHeight="26.0" prefWidth="69.0" />
-            <TextField fx:id="campo_prereq" layoutX="154.0" layoutY="47.0" prefHeight="26.0" prefWidth="69.0" />
             <TextField fx:id="campo_duracion" layoutX="247.0" layoutY="47.0" prefHeight="26.0" prefWidth="69.0" />
             <TextField fx:id="campo_costo" layoutX="331.0" layoutY="47.0" prefHeight="26.0" prefWidth="69.0" />
             <Button id="button" fx:id="anadir" layoutX="440.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#agregar" prefHeight="32.0" prefWidth="69.0" stylesheets="@styles/btnStyles.css" text="AGREGAR" />
             <JFXButton fx:id="calcular" buttonType="RAISED" layoutX="596.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="82.0" style="-fx-background-color: #4EF037;" text="CALCULAR" />
             <JFXButton fx:id="reiniciar" layoutX="513.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="32.0" prefWidth="78.0" style="-fx-background-color: #DE3C3C;" text="REINICIAR" />
+            <ComboBox fx:id="boxPrereq" layoutX="156.0" layoutY="46.0" prefHeight="29.0" prefWidth="78.0" promptText="PREREQUISITO" />
          </children>
       </Pane>
     <AnchorPane layoutX="52.0" layoutY="142.0" minHeight="0.0" minWidth="0.0" prefHeight="21.0" prefWidth="141.0" />
@@ -50,6 +50,5 @@
       </ScrollPane>
       <JFXDialog fx:id="dialog" layoutX="656.0" layoutY="272.0" />
       <VBox layoutX="631.0" layoutY="172.0" prefHeight="309.0" prefWidth="125.0" />
-      <ComboBox fx:id="boxPrereq" layoutX="216.0" layoutY="23.0" prefWidth="150.0" promptText="PREREQUISITO" />
    </children>
 </Pane>

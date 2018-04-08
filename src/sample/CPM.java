@@ -2,6 +2,9 @@ package sample;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -134,7 +137,17 @@ public class CPM {
 
     }
 
+    public static boolean isInt(TextField input){
+        try{
+            int costo = Integer.parseInt(input.getText());
+            return true;
+        }catch (NumberFormatException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "EN COSTO Y DURACION SOLO NUMEROS:", ButtonType.OK);
+            alert.showAndWait();
+            return false;
 
+        }
 
+    }
 
 }

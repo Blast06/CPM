@@ -1,32 +1,39 @@
 package sample;
 
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
+import java.text.ParseException;
 import java.util.Currency;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
 public class Controller implements Initializable {
 
-    public String checkRepetidos = "-";
+    private String checkRepetidos = "-";
+
+
 
     @FXML
     private TextField campo_actividad;
 
-    @FXML
-    private TextField campo_prereq;
 
     @FXML
     private TextField campo_duracion;
+
 
     @FXML
     private TextField campo_costo;
@@ -60,8 +67,6 @@ public class Controller implements Initializable {
 
     ObservableList<CPM> cpms;
 
-    @FXML
-    private JFXDialog dialog;
 
     private int posicionCpmEnTabla;
 
@@ -74,10 +79,16 @@ public class Controller implements Initializable {
     void agregar(ActionEvent event) {
 
 
+
+
         //VERIFICA SI ES LA PRIMERA ACTIVIDAD QUE SE INGRESA, PARA ASI NO TENER QUE LLENAR EL PREREQUISITO y SI CUALQUIERA DE LOS
         // OTROS CAMPOS(SIN INCLUIR LOS PREREQUISITOS) ESTA LLENO
-        if (checkRepetidos.length() < 2 && !campo_actividad.getText().isEmpty() && !campo_duracion.getText().isEmpty() &&
-                !campo_costo.getText().isEmpty()) {
+        if (checkRepetidos.length() < 2 && !campo_actividad.getText().isEmpty() && !campo_costo.getText().isEmpty() &&
+                !campo_duracion.getText().isEmpty()) {
+
+
+
+
             checkRepetidos = checkRepetidos.concat(campo_actividad.getText().toUpperCase());
             String act, pre, imp2;
             int dur, cost, imp;
@@ -92,9 +103,6 @@ public class Controller implements Initializable {
             System.out.println(checkRepetidos);
             preReqList.addAll(act);
             boxPrereq.setItems(preReqList);
-
-
-
         }
 
         //esto chequea si algun campo esta vacio y manda un pop up diciendo que no se pueden dejar campos vacios
@@ -177,6 +185,28 @@ public class Controller implements Initializable {
 
 
         inicializarTablaCpm();
+
+        //PARA EVITAR QUE NO SE INGRESEN NUMEROS
+        campo_costo.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    campo_costo.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+
+        //PARA EVITAR QUE NO SE INGRESEN DATOS DIFERENTES A NUMEROS
+        campo_duracion.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    campo_duracion.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
 
 
         /*reiniciar.setVisible(false);

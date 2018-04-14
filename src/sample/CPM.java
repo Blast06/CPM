@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Alert;
@@ -22,7 +23,60 @@ public class CPM {
     public SimpleIntegerProperty duracion = new SimpleIntegerProperty();
     public SimpleIntegerProperty costo = new SimpleIntegerProperty();
     public SimpleStringProperty importe = new SimpleStringProperty();
+    public int primerTime,ultimoTime,inicioTardio,finalTardio,node;
 
+    public int getPrimerTime() {
+        return primerTime;
+    }
+
+    public void setPrimerTime(int primerTime) {
+        this.primerTime = primerTime;
+    }
+
+    public int getUltimoTime() {
+        return ultimoTime;
+    }
+
+    public void setUltimoTime(int ultimoTime) {
+        this.ultimoTime = ultimoTime;
+    }
+
+    public int getInicioTardio() {
+        return inicioTardio;
+    }
+
+    public void setInicioTardio(int inicioTardio) {
+        this.inicioTardio = inicioTardio;
+    }
+
+    public int getFinalTardio() {
+        return finalTardio;
+    }
+
+    public void setFinalTardio(int finalTardio) {
+        this.finalTardio = finalTardio;
+    }
+
+    public int getNode() {
+        return node;
+    }
+
+    public void setNode(int node) {
+        this.node = node;
+    }
+
+    public CPM(SimpleStringProperty actividad, SimpleStringProperty prereq, SimpleIntegerProperty duracion, SimpleIntegerProperty costo, SimpleStringProperty importe, int primerTime, int ultimoTime, int inicioTardio, int finalTardio, int node) {
+        this.actividad = actividad;
+        this.prereq = prereq;
+        this.duracion = duracion;
+        this.costo = costo;
+        this.importe = importe;
+        this.primerTime = primerTime;
+        this.ultimoTime = ultimoTime;
+        this.inicioTardio = inicioTardio;
+        this.finalTardio = finalTardio;
+        this.node = node;
+    }
 
     public void setActividad(String actividad) {
         this.actividad.set(actividad);
@@ -34,6 +88,20 @@ public class CPM {
         this.duracion.set(duracion);
         this.costo.set(costo);
         this.importe.set(importe);
+
+    }
+
+    public CPM() {
+        this.actividad = actividad;
+        this.prereq = prereq;
+        this.duracion = duracion;
+        this.costo = costo;
+        this.importe = importe;
+        this.node = node;
+    }
+
+    public CPM(String act, String pre, int dur, int cost, String s, int nodosGrales){
+
     }
 
     public void setPrereq(String prereq) {
@@ -149,5 +217,16 @@ public class CPM {
         }
 
     }
+
+
+    public static void obtener1erTiempo(int time1, int time2){
+
+        int result = time1 + time2;
+
+    }
+
+
+
+
 
 }

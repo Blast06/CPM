@@ -1,31 +1,24 @@
 package sample;
 
-import com.jfoenix.controls.JFXDialog;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
-import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
-import java.text.ParseException;
-import java.util.Currency;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
+
 
 public class Controller implements Initializable {
 
     private String checkRepetidos = "-";
-
-
+    private int nodosGrales = 0;
 
     @FXML
     private TextField campo_actividad;
@@ -79,34 +72,36 @@ public class Controller implements Initializable {
     void agregar(ActionEvent event) {
 
 
-
-
         //VERIFICA SI ES LA PRIMERA ACTIVIDAD QUE SE INGRESA, PARA ASI NO TENER QUE LLENAR EL PREREQUISITO y SI CUALQUIERA DE LOS
         // OTROS CAMPOS(SIN INCLUIR LOS PREREQUISITOS) ESTA LLENO
         if (checkRepetidos.length() < 2 && !campo_actividad.getText().isEmpty() && !campo_costo.getText().isEmpty() &&
                 !campo_duracion.getText().isEmpty()) {
 
 
-
-
             checkRepetidos = checkRepetidos.concat(campo_actividad.getText().toUpperCase());
             String act, pre, imp2;
-            int dur, cost, imp;
+            int dur, cost, imp,singleNode;
             act = campo_actividad.getText().toUpperCase();
             pre = "";
+            nodosGrales++;
             dur = Integer.parseInt(campo_duracion.getText());
             cost = Integer.parseInt(campo_costo.getText());
             imp = dur * cost;
             imp2 = String.valueOf(imp);
             CPM cpm = new CPM(act, pre, dur, cost, CPM.ConvertToDollar(imp2));
+            cpm.node = nodosGrales;
             tablaCPM.getItems().add(cpm);
             System.out.println(checkRepetidos);
             preReqList.addAll(act);
             boxPrereq.setItems(preReqList);
+
+
+
+
         }
 
         //esto chequea si algun campo esta vacio y manda un pop up diciendo que no se pueden dejar campos vacios
-        else if (campo_actividad.getText().isEmpty() || boxPrereq.getSelectionModel().isEmpty() || campo_duracion.getText().isEmpty() ||
+        else if (campo_actividad.getText().isEmpty()  || campo_duracion.getText().isEmpty() ||
                 campo_costo.getText().isEmpty()) {
 
 
@@ -125,11 +120,33 @@ public class Controller implements Initializable {
         }
 
 
-        //en caso de que no esten vacios, procede a llenar
+        //en caso de que no esten vacios y solo este el prereq vacio, procede a llenar
+        else if (boxPrereq.getSelectionModel().isEmpty()){
+            checkRepetidos = checkRepetidos.concat(campo_actividad.getText().toUpperCase());
+            String act, pre, imp2;
+            int dur, cost, imp;
+            nodosGrales++;
+            act = campo_actividad.getText().toUpperCase();
+            pre = "";
+            dur = Integer.parseInt(campo_duracion.getText());
+            cost = Integer.parseInt(campo_costo.getText());
+            imp = dur * cost;
+            imp2 = String.valueOf(imp);
+            CPM cpm = new CPM(act, pre, dur, cost, CPM.ConvertToDollar(imp2));
+            cpm.node = nodosGrales;
+            tablaCPM.getItems().add(cpm);
+            preReqList.addAll(act);
+           /* boxPrereq.setItems(preReqList);
+            boxPrereq.getSelectionModel().clearSelection();*/
+
+        }
+
+        //EN CASO DE QUE LOS PREREQ SI ESTEN LLENOS
         else {
             checkRepetidos = checkRepetidos.concat(campo_actividad.getText().toUpperCase());
             String act, pre, imp2;
             int dur, cost, imp;
+            nodosGrales++;
             act = campo_actividad.getText().toUpperCase();
             pre = boxPrereq.getValue().toString().toUpperCase();
             dur = Integer.parseInt(campo_duracion.getText());
@@ -137,6 +154,7 @@ public class Controller implements Initializable {
             imp = dur * cost;
             imp2 = String.valueOf(imp);
             CPM cpm = new CPM(act, pre, dur, cost, CPM.ConvertToDollar(imp2));
+            cpm.node = nodosGrales;
             tablaCPM.getItems().add(cpm);
             preReqList.addAll(act);
             boxPrereq.setItems(preReqList);
@@ -147,11 +165,43 @@ public class Controller implements Initializable {
         //Currency.getAvailableCurrencies();
 
 
+
+
     }
 
 
     @FXML
     void calcular(ActionEvent event) {
+        int GA = 15000;
+        CPM cpm2 = new CPM();
+        final int[] totalProyecto = {0, 0, 0, 0, 0, 0};
+//        final  int totalProyecto = 0;
+        tablaCPM.getItems().forEach(cpm -> totalProyecto[0] += cpm.getDuracion());
+        System.out.println("Duraction total:" + totalProyecto[0]);
+
+        /*tablaCPM.getItems().forEach(cpm -> totalProyecto[1] +=cpm.getCosto());
+        System.out.println("Costo total: " + totalProyecto[1]);*/
+
+        tablaCPM.getItems().forEach(
+                cpm -> totalProyecto[2] += cpm.getCosto()
+
+        );
+        System.out.println("Costo:" + totalProyecto[2]);
+
+
+        //obtener numero de rows
+        System.out.println(tablaCPM.getItems().size());
+
+        //obtener x celda en x numero de row
+        for (int i = 0; i <tablaCPM.getItems().size() ; i++) {
+            System.out.println(tablaCPM.getItems().get(i).getDuracion());
+
+        }
+
+
+        //utilizar este metodo para calcular los tiempos finales,tempranos...etc
+
+        System.out.println(nodosGrales);
 
 
     }

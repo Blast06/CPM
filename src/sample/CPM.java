@@ -1,15 +1,11 @@
 package sample;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -23,7 +19,81 @@ public class CPM {
     public SimpleIntegerProperty duracion = new SimpleIntegerProperty();
     public SimpleIntegerProperty costo = new SimpleIntegerProperty();
     public SimpleStringProperty importe = new SimpleStringProperty();
-    public int primerTime,ultimoTime,inicioTardio,finalTardio,node;
+    public SimpleIntegerProperty node = new SimpleIntegerProperty();
+    public SimpleIntegerProperty actNumber = new SimpleIntegerProperty();
+
+
+
+    public int primerTime,ultimoTime,inicioTardio,finalTardio;
+
+    public CPM(SimpleStringProperty actividad, SimpleStringProperty prereq, SimpleIntegerProperty duracion, SimpleIntegerProperty costo, SimpleStringProperty importe, SimpleIntegerProperty node, SimpleIntegerProperty actNumber) {
+        this.actividad = actividad;
+        this.prereq = prereq;
+        this.duracion = duracion;
+        this.costo = costo;
+        this.importe = importe;
+        this.node = node;
+        this.actNumber = actNumber;
+    }
+
+    public int getActNumber() {
+        return actNumber.get();
+    }
+
+    public SimpleIntegerProperty actNumberProperty() {
+        return actNumber;
+    }
+
+    public void setActNumber(int actNumber) {
+        this.actNumber.set(actNumber);
+    }
+
+    public int getNode() {
+        return node.get();
+    }
+
+    public SimpleIntegerProperty nodeProperty() {
+        return node;
+    }
+
+    public void setNode(int node) {
+        this.node.set(node);
+    }
+
+
+    public CPM() {
+
+    }
+
+
+
+
+
+    public CPM(SimpleStringProperty actividad, SimpleStringProperty prereq, SimpleIntegerProperty duracion, SimpleIntegerProperty costo, SimpleStringProperty importe) {
+        this.actividad = actividad;
+        this.prereq = prereq;
+        this.duracion = duracion;
+        this.costo = costo;
+        this.importe = importe;
+
+    }
+
+
+
+    public void setActividad(String actividad) {
+        this.actividad.set(actividad);
+    }
+
+    public CPM(String actividad, String prereq, int duracion, int costo, String importe, int nodosGrales, int actNumbers) {
+        this.actividad.set(actividad);
+        this.prereq.set(prereq);
+        this.duracion.set(duracion);
+        this.costo.set(costo);
+        this.importe.set(importe);
+        this.node.set(nodosGrales);
+        this.actNumber.set(actNumbers);
+
+    }
 
     public int getPrimerTime() {
         return primerTime;
@@ -57,52 +127,8 @@ public class CPM {
         this.finalTardio = finalTardio;
     }
 
-    public int getNode() {
-        return node;
-    }
 
-    public void setNode(int node) {
-        this.node = node;
-    }
 
-    public CPM(SimpleStringProperty actividad, SimpleStringProperty prereq, SimpleIntegerProperty duracion, SimpleIntegerProperty costo, SimpleStringProperty importe, int primerTime, int ultimoTime, int inicioTardio, int finalTardio, int node) {
-        this.actividad = actividad;
-        this.prereq = prereq;
-        this.duracion = duracion;
-        this.costo = costo;
-        this.importe = importe;
-        this.primerTime = primerTime;
-        this.ultimoTime = ultimoTime;
-        this.inicioTardio = inicioTardio;
-        this.finalTardio = finalTardio;
-        this.node = node;
-    }
-
-    public void setActividad(String actividad) {
-        this.actividad.set(actividad);
-    }
-
-    public CPM(String actividad, String prereq, int duracion, int costo, String importe) {
-        this.actividad.set(actividad);
-        this.prereq.set(prereq);
-        this.duracion.set(duracion);
-        this.costo.set(costo);
-        this.importe.set(importe);
-
-    }
-
-    public CPM() {
-        this.actividad = actividad;
-        this.prereq = prereq;
-        this.duracion = duracion;
-        this.costo = costo;
-        this.importe = importe;
-        this.node = node;
-    }
-
-    public CPM(String act, String pre, int dur, int cost, String s, int nodosGrales){
-
-    }
 
     public void setPrereq(String prereq) {
         this.prereq.set(prereq);
@@ -181,49 +207,12 @@ public class CPM {
         return cad;
     }
 
-    public static String SoloNumeros(String cad){
-        String cadr="";
-        boolean x=true;
-        int i=0;
-        if ( !cad.isEmpty()){
-            while (x){
-                String aux= String.valueOf(cad.charAt(i));
-                try {
-                    Integer.parseInt(aux);
-
-                    for ( int j=i;j<cad.toCharArray().length;j++){
-                        if ( cad.charAt(j)=='.'){
-                            j++; }
-                        Integer.parseInt(String.valueOf(cad.charAt(j)));
-                        cadr = cadr+cad.charAt(j);
-                        x=false;
-                    } }
-                catch(NumberFormatException exep){
-                    i++; }
-            } }
-        return cadr;
-
-    }
-
-    public static boolean isInt(TextField input){
-        try{
-            int costo = Integer.parseInt(input.getText());
-            return true;
-        }catch (NumberFormatException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR, "EN COSTO Y DURACION SOLO NUMEROS:", ButtonType.OK);
-            alert.showAndWait();
-            return false;
-
-        }
-
-    }
 
 
-    public static void obtener1erTiempo(int time1, int time2){
 
-        int result = time1 + time2;
 
-    }
+
+
 
 
 
